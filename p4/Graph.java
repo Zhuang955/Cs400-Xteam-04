@@ -54,7 +54,7 @@ public class Graph<E> implements GraphADT<E> {
 	 */
     @Override
     public E addVertex(E vertex) {
-    		if(vertex == null) {
+    	if(vertex == null) {
     			throw new IllegalArgumentException(); 
     		}
         if(adjacencyList.containsKey(vertex)) {
@@ -78,12 +78,15 @@ public class Graph<E> implements GraphADT<E> {
      * {@inheritDoc}
      */
     @Override
-    public E removeVertex(E vertex) {
-        if(adjacencyList.containsKey(vertex)) {
-        		adjacencyList.remove(vertex); 
-        } 
-        
+     public E removeVertex(E vertex) {
+        if(vertex != null & adjacencyList.containsKey(vertex)) {
+       		adjacencyList.remove(vertex);
+        	return vertex; 
+        } else {
+        	return null; 
+        }
     }
+
 
     /**
      * {@inheritDoc}
