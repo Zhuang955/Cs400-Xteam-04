@@ -166,35 +166,36 @@ public class Graph<E> implements GraphADT<E> {
             }
         }
     }
-	/**
-	 * Get all the neighbor vertices of a vertex
-	 * 
-	 * Valid argument conditions:
-	 * 1. vertex is not null
-	 * 2. vertex exists
-	 * 
-	 * @param vertex the vertex
-	 * @return an iterable for all the immediate connected neighbor vertices
-	 */
+    /**
+     * Get all the neighbor vertices of a vertex
+     *
+     * Valid argument conditions:
+     * 1. vertex is not null
+     * 2. vertex exists
+     *
+     * @param vertex the vertex
+     * @return an iterable for all the immediate connected neighbor vertices
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public Iterable<E> getNeighbors(E vertex) {
-        if(vertex != null & graph.containsKey(vertex)) {
-        		Iterator iterator = graph.get(vertex).iterator(); 
-        		while(iterator.hasNext()) {
-        			
-        		}
-        }
+        return graph.get(vertex);
     }
 
+    /**
+     * Get all the vertices in the graph
+     *
+     * @return an iterable for all the vertices
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public Iterable<E> getAllVertices() {
-        
+        Set set = graph.entrySet();
+        return set;
     }
 
 }
