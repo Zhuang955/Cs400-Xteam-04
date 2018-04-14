@@ -4,7 +4,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -41,7 +43,8 @@ public class GraphProcessor {
      * Graph which stores the dictionary words and their associated connections
      */
     private GraphADT<String> graph;
-
+    //includes results of bfs
+    private ArrayList<ArrayList<String>> bfsPath; 
     /**
      * Constructor for this class. Initializes instances variables to set the starting state of the object
      */
@@ -64,8 +67,30 @@ public class GraphProcessor {
      * @return Integer the number of vertices (words) added
      */
     public Integer populateGraph(String filepath) {
-        return 0;
-    
+    	Integer wordNum = 0;         //number of vertices added
+    	WordProcessor wordPros = new WordProcessor();
+    	List<String> wordLines = null;
+    	try {
+			Stream <String> wordStream = wordPros.getWordStream(filepath);
+			wordLines = wordStream.collect(Collectors.toList());
+		} catch (IOException e) {
+			System.out.println("Error: Failed to read file from " + filepath);
+			return -1;
+		}
+    	//add all vertices
+    	for(int i = 0; i < wordLines.size(); i++){
+    		graph.addVertex(wordLines.get(i));
+    		wordNum++;
+    	}
+    	//add all edges
+    	for(int i = 0; i < wordLines.size() - 1; i++){
+    		for(int j = i + 1; j < wordLines.size(); j++){
+    			if(wordPros.isAdjacent(wordLines.get(i), wordLines.get(j))){
+    				graph.addEdge(wordLines.get(i), wordLines.get(j));
+    			}
+    		}
+    	}
+        return wordNum;
     }
 
     
@@ -82,12 +107,36 @@ public class GraphProcessor {
      *  shortest path between cat and wheat is the following list of words:
      *     [cat, hat, heat, wheat]
      * 
+     * 
      * @param word1 first word
      * @param word2 second word
      * @return List<String> list of the words
      */
     public List<String> getShortestPath(String word1, String word2) {
-        return null;
+    	List<String> path = new ArrayList<String>();
+    	//find result of bfs that is related to word1
+    	int relatedPath = -1;
+    	for(int i = 0; i < bfsPath.size(); i++){
+    		if(bfsPath.get(i).get(0).equals(word1)){
+    			relatedPath = i;
+    			break;
+    		}
+    	}
+    	
+    	String currentWord = word2;
+    	//the index where currentWord is found
+    	int indexFound = bfsPath.get(relatedPath).indexOf(word2);
+    	while(!currentWord.equals(word1)){
+    		path.add(0, currentWord);
+    		for(String successor : graph.getNeighbors(currentWord)){
+    			if(bfsPath.get(relatedPath).indexOf(successor) < indexFound){
+    				indexFound = bfsPath.get(relatedPath).indexOf(successor);
+    			}
+    		}
+    		currentWord = bfsPath.get(relatedPath).get(indexFound);
+    	}
+    	
+    	return path;
     
     }
     
@@ -104,12 +153,13 @@ public class GraphProcessor {
      *  distance of the shortest path between cat and wheat, [cat, hat, heat, wheat]
      *   = 3 (the number of edges in the shortest path)
      * 
+     * 
      * @param word1 first word
      * @param word2 second word
-     * @return Integer distance
+     * @return Integer distance, Distance = -1 if no path found between words or if word1=word2
      */
     public Integer getShortestDistance(String word1, String word2) {
-        return null;
+        return getShortestPath(word1, word2).size() - 1;
     }
     
     /**
@@ -118,6 +168,45 @@ public class GraphProcessor {
      * Any shortest path algorithm can be used (Djikstra's or Floyd-Warshall recommended).
      */
     public void shortestPathPrecomputation() {
+    	bfsPath = new ArrayList<ArrayList<String>>();
+    	for(String vertex : graph.getAllVertices()){
+    		BFS(vertex);
+    	}
+    }
     
+    private void BFS(String name){
+    	//stores the result of bfs
+    	ArrayList<String> pathFromName = new ArrayList<String>();
+    	//store all the vertexes into arraylist
+    	ArrayList<String> allVertex = new ArrayList<String>();
+    	for(String vertex : graph.getAllVertices()){
+    		allVertex.add(vertex);
+    	}
+    	//find the position of the start vertex
+    	int curIndex = allVertex.indexOf(name);
+    	//mark all vertices as unvisited
+    	boolean visited[] = new boolean[allVertex.size()];
+    	for(int i = 0; i < visited.length; i++){
+    		visited[i] = false;
+    	}
+    	//create queue
+    	Queue <String> q = new LinkedList<String>();
+    	String current = "";
+    	//Start breadth first search
+    	visited[curIndex] = true;
+    	q.add(name);
+    	while(q.size()!= 0){
+    		current = q.poll();
+    		pathFromName.add(current);    //record the result
+    		for(String successor : graph.getNeighbors(current)){
+    			curIndex = allVertex.indexOf(successor); 
+    			if(visited[curIndex] == false){
+    				visited[curIndex] = true;
+    				q.add(successor);
+    			}
+    		}
+    	}
+    	//add results to bfsPath
+    	bfsPath.add(pathFromName);
     }
 }
