@@ -13,78 +13,67 @@ import java.util.*;
  * 
  */
 public class Graph<E> implements GraphADT<E> {
-    
     /**
      * Instance variables and constructors
      */
-	private HashMap<E, HashSet<E>> graph; 
+    private HashMap<E,Boolean> visitRecord;
+    private HashMap<E, HashSet<E>> graph;
     /**
      * {@inheritDoc}
      */
-	
-	/*public class Vertex<E> {
-		private E data;
-		private boolean visited; 
-		
-		public Vertex() {
-			data = null; 
-			visited = false; 
-		}
-		
-		public Vertex(E data, boolean visited) {
-			this.data = data; 
-			this.visited = visited; 
-		}
-	}*/ 
-	
-	public Graph() {
-		this.graph = new HashMap<E, HashSet<E>>(); 
-	}
-	
-	/**
-	 * Add new vertex to the graph
-	 * 
-	 * Valid argument conditions:
-	 * 1. vertex should be non-null
-	 * 2. vertex should not already exist in the graph 
-	 * 
-	 * @param vertex the vertex to be added
-	 * @return vertex if vertex added, else return null if vertex can not be added (also if valid conditions are violated)
-	 * 
-	 * try catch 
-	 */
+
+
+    public Graph() {
+        this.visitRecord = new HashMap<E, Boolean>();
+        this.graph = new HashMap<E, HashSet<E>>();
+    }
+
+    /**
+     * Add new vertex to the graph
+     *
+     * Valid argument conditions:
+     * 1. vertex should be non-null
+     * 2. vertex should not already exist in the graph
+     *
+     * @param vertex the vertex to be added
+     * @return vertex if vertex added, else return null if vertex can not be added (also if valid conditions are violated)
+     *
+     * try catch
+     */
     @Override
     public E addVertex(E vertex) {
-    		if(vertex == null) {
-    			throw new IllegalArgumentException(); 
-    		}
-        if(graph.containsKey(vertex)) {
-        		throw new DuplicateVerticeException(); 
+        if(vertex == null) {
+            return null;
         }
+        if(graph.containsKey(vertex)) {
+            return null;
+        }
+        visitRecord.put(vertex,false);
         graph.put(vertex, new HashSet<E>());
-        return vertex; 
+        return vertex;
     }
-    
-	/**
-	 * Remove the vertex and associated edge associations from the graph
-	 * 
-	 * Valid argument conditions:
-	 * 1. vertex should be non-null
-	 * 2. vertex should exist in the graph 
-	 *  
-	 * @param vertex the vertex to be removed
-	 * @return vertex if vertex removed, else return null if vertex and associated edges can not be removed (also if valid conditions are violated)
-	 */
+
+    /**
+     * Remove the vertex and associated edge associations from the graph
+     *
+     * Valid argument conditions:
+     * 1. vertex should be non-null
+     * 2. vertex should exist in the graph
+     *
+     * @param vertex the vertex to be removed
+     * @return vertex if vertex removed, else return null if vertex and associated edges can not be removed (also if valid conditions are violated)
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public E removeVertex(E vertex) {
         if(vertex != null & graph.containsKey(vertex)) {
-        		graph.remove(vertex);
-        		return vertex; 
+            visitRecord.remove(vertex);
+            graph.remove(vertex);
+            return vertex;
         } else {
-        		return null; 
+            return null;
         }
     }
 
