@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.*; 
 
 
 /**
@@ -16,13 +17,13 @@ public class Graph<E> implements GraphADT<E> {
     /**
      * Instance variables and constructors
      */
-	private HashMap<Vertex, HashSet<Vertex>> adjacencyList; 
+	private HashMap<E, HashSet<E>> graph; 
     /**
      * {@inheritDoc}
      */
 	
-	public class Vertex<T> {
-		private T data;
+	/*public class Vertex<E> {
+		private E data;
 		private boolean visited; 
 		
 		public Vertex() {
@@ -30,14 +31,14 @@ public class Graph<E> implements GraphADT<E> {
 			visited = false; 
 		}
 		
-		public Vertex(T data, boolean visited) {
+		public Vertex(E data, boolean visited) {
 			this.data = data; 
 			this.visited = visited; 
 		}
-	}
+	}*/ 
 	
 	public Graph() {
-		this.adjacencyList = new HashMap<Vertex, HashSet<Vertex>>(); 
+		this.graph = new HashMap<E, HashSet<E>>(); 
 	}
 	
 	/**
@@ -54,13 +55,13 @@ public class Graph<E> implements GraphADT<E> {
 	 */
     @Override
     public E addVertex(E vertex) {
-    	if(vertex == null) {
+    		if(vertex == null) {
     			throw new IllegalArgumentException(); 
     		}
-        if(adjacencyList.containsKey(vertex)) {
+        if(graph.containsKey(vertex)) {
         		throw new DuplicateVerticeException(); 
         }
-        adjacencyList.put((Vertex) vertex, new HashSet<Vertex>());
+        graph.put(vertex, new HashSet<E>());
         return vertex; 
     }
     
@@ -78,15 +79,14 @@ public class Graph<E> implements GraphADT<E> {
      * {@inheritDoc}
      */
     @Override
-     public E removeVertex(E vertex) {
-        if(vertex != null & adjacencyList.containsKey(vertex)) {
-       		adjacencyList.remove(vertex);
-        	return vertex; 
+    public E removeVertex(E vertex) {
+        if(vertex != null & graph.containsKey(vertex)) {
+        		graph.remove(vertex);
+        		return vertex; 
         } else {
-        	return null; 
+        		return null; 
         }
     }
-
 
     /**
      * {@inheritDoc}
@@ -111,13 +111,27 @@ public class Graph<E> implements GraphADT<E> {
     public boolean isAdjacent(E vertex1, E vertex2) {
         
     }
-
+	/**
+	 * Get all the neighbor vertices of a vertex
+	 * 
+	 * Valid argument conditions:
+	 * 1. vertex is not null
+	 * 2. vertex exists
+	 * 
+	 * @param vertex the vertex
+	 * @return an iterable for all the immediate connected neighbor vertices
+	 */
     /**
      * {@inheritDoc}
      */
     @Override
     public Iterable<E> getNeighbors(E vertex) {
-        
+        if(vertex != null & graph.containsKey(vertex)) {
+        		Iterator iterator = graph.get(vertex).iterator(); 
+        		while(iterator.hasNext()) {
+        			
+        		}
+        }
     }
 
     /**
