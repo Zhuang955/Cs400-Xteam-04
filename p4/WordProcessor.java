@@ -22,6 +22,12 @@ public class WordProcessor {
 	 * @throws IOException exception resulting from accessing the filepath
 	 */
 	public static Stream<String> getWordStream(String filepath) throws IOException {
+		// read from the filepath, and then do mapping adn filtering to get the wordstream for further use
+	        Stream<String> wordStream = Files.lines(Paths.get(filepath));
+		
+		wordStream = wordStream.map(String::toString);
+		wordStream = wordStream.filter(x -> x != null && !x.equals(""));
+
 		/**
 		 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html">java.nio.file.Files</a>
 		 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Paths.html">java.nio.file.Paths</a>
@@ -39,7 +45,8 @@ public class WordProcessor {
 		 *     produces
 		 *         a Stream of lines read from the filepath
 		 * 
-		 * Once this Stream of lines is available, you can use the powerful operations available for Stream objects to combine 
+
+* Once this Stream of lines is available, you can use the powerful operations available for Stream objects to combine 
 		 * multiple pre-processing operations of each line in a single statement.
 		 * 
 		 * Few of these features:
@@ -65,7 +72,7 @@ public class WordProcessor {
 		 * 		streamOfLines.map(...).filter(a -> ...).map(...) and so on
 		 */
 		
-		return null;
+		return wordStream;
 	}
 	
 	/**
@@ -86,6 +93,54 @@ public class WordProcessor {
 	 * @return true if word1 and word2 are adjacent else false
 	 */
 	public static boolean isAdjacent(String word1, String word2) {
+		// if two strings are equal, return false immediately
+		if (word1.equals(word2)) return false;
+		
+		// if two strings are not equal, then the following will be executed
+		// if the lengths of two words are equal
+		if (word1.length() == word2.length()) {
+			int difference = 0;
+			for (int n = 0; n < word1.length(); n++)) {
+				if (word1.charAt(n) != word2.charAt(n)) difference++;
+			}
+			if (difference == 1) return true;
+		}
+		// if of 1 char addition or 1 char deletion 
+		else if (Math.abs(word1.length()-word2.length()) == 1) {
+			int m = word1.length();
+			int n = word2.length();
+			
+			int i = 0;
+			int j = 0;
+			int count = 0;
+			// loop through every char in the string
+			while (i < m && j < n) {
+				if (word1.charAt(i) != word2.charAt(j)) {
+					count ++;
+					if (m>n) i++;
+					else j++;
+				}
+				else {
+					i++;
+					j++;
+				}	
+				if (count > 1) return false; 
+			}
+			
+			// if the count is one, then i and j should equal m and n,
+			// so that it will be one char deletion or addition
+			if (count == 1) {
+				if ( i == m && j == n) return true;
+				else return false;
+			}
+			// if count is zero, then either i or j doesn't reach the end of their string
+			else if (count == 0) {
+				if ( i == m && j == n) return false;
+				else ((i == m && j == n-1) || (i == m-1 && j == n)) return true;
+			}
+			
+		}
+		
 		return false;	
 	}
 	
