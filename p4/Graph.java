@@ -148,12 +148,34 @@ public class Graph<E> implements GraphADT<E> {
 
     }
 
+       /**
+     * Check whether the two vertices are adjacent
+     *
+     * Valid argument conditions:
+     * 1. both the vertices should exist in the graph
+     * 2. vertex1 should not equal vertex2
+     *
+     * @param vertex1 the first vertex
+     * @param vertex2 the second vertex
+     * @return true if both the vertices have an edge with each other, else return false if vertex1 and vertex2 are not connected (also if valid conditions are violated)
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isAdjacent(E vertex1, E vertex2) {
-        
+        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+            return false;
+        }
+        else if(vertex1.equals(vertex2)==true){//potential bug existed
+            return false;
+        }else{
+            if(graph.get(vertex1).contains(vertex2) && graph.get(vertex2).contains(vertex1)){
+                return true;
+            }else {
+                return false;
+            }
+        }
     }
 	/**
 	 * Get all the neighbor vertices of a vertex
