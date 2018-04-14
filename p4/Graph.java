@@ -88,20 +88,64 @@ public class Graph<E> implements GraphADT<E> {
         }
     }
 
+       /**
+     /**
+     * Add an edge between two vertices (edge is undirected and unweighted)
+     *
+     * Valid argument conditions:
+     * 1. both the vertices should exist in the graph
+     * 2. vertex1 should not equal vertex2
+     *
+     * @param vertex1 the first vertex
+     * @param vertex2 the second vertex
+     * @return true if edge added, else return false if edge can not be added (also if valid conditions are violated)
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean addEdge(E vertex1, E vertex2) {
-        
-    }    
+        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+            return false;
+        }
+        else if(vertex1.equals(vertex2)==true){//potential bug existed
+            return false;
+        }
+        else{
+            graph.get(vertex1).add(vertex2);
+            graph.get(vertex2).add(vertex1);
+            return true;
+        }
+    }
 
+    /**
+     * Remove the edge between two vertices (edge is undirected and unweighted)
+     *
+     * Valid argument conditions:
+     * 1. both the vertices should exist in the graph
+     * 2. vertex1 should not equal vertex2
+     *
+     * @param vertex1 the first vertex
+     * @param vertex2 the second vertex
+     * @return true if edge removed, else return false if edge can not be removed (also if valid conditions are violated)
+     */
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean removeEdge(E vertex1, E vertex2) {
-        
+        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+            return false;
+        }
+        else if(vertex1.equals(vertex2)==true){//potential bug existed
+            return false;
+        }
+        else{
+            graph.get(vertex1).remove(vertex2);
+            graph.get(vertex2).remove(vertex1);
+            return true;
+        }
+
     }
 
     /**
