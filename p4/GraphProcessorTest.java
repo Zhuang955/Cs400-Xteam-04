@@ -15,7 +15,8 @@ public class GraphProcessorTest {
 	
 	GraphProcessor gp = null;
 	String expected = null;
-    String actual = null;
+        String actual = null;
+	filePath = "";
     
     /**
      * @throws java.lang.Exception
@@ -49,7 +50,7 @@ public class GraphProcessorTest {
     @Test
     public void test01_populateGraph() {
         expected = "6";
-        actual = "" + gp.populateGraph("words.txt");
+        actual = "" + gp.populateGraph(filePath);
         if (! expected.equals(actual))
             fail("expected: "+expected+ " actual: "+actual);
     }
@@ -57,7 +58,7 @@ public class GraphProcessorTest {
     @Test
     public void test02_getShortestPath_diffWords() {
         expected = "[cat, hat, heat, wheat]";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         List<String> steps = gp.getShortestPath("cat", "wheat");
         actual = "[";
@@ -72,7 +73,7 @@ public class GraphProcessorTest {
     @Test
     public void test03_getShortestPath_sameWords() {
         expected = "true";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         List<String> steps = gp.getShortestPath("cat", "cat");
         actual = "" + steps.isEmpty();
@@ -83,7 +84,7 @@ public class GraphProcessorTest {
     @Test
     public void test04_getShortestPath_noPath() {
         expected = "true";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         List<String> steps = gp.getShortestPath("cat", "kit");
         actual = "" + steps.isEmpty();
@@ -94,7 +95,7 @@ public class GraphProcessorTest {
     @Test
     public void test05_getShortestDistance_diffWords() {
     	expected = "3";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         actual = "" + gp.getShortestDistance("cat", "wheat");
         if (! expected.equals(actual))
@@ -104,7 +105,7 @@ public class GraphProcessorTest {
     @Test
     public void test06_getShortestDistance_sameWords() {
         expected = "-1";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         actual = "" + gp.getShortestDistance("cat", "cat");
         if (! expected.equals(actual))
@@ -114,7 +115,7 @@ public class GraphProcessorTest {
     @Test
     public void test07_getShortestDistance_noPath() {
         expected = "-1";
-        gp.populateGraph("words.txt");
+        gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         actual = "" + gp.getShortestDistance("cat", "kit");
         if (! expected.equals(actual))
