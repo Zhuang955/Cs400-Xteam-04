@@ -16,7 +16,7 @@ public class GraphProcessorTest {
 	GraphProcessor gp = null;
 	String expected = null;
         String actual = null;
-	filePath = "";
+	String filePath = "src/words.txt";
     
     /**
      * @throws java.lang.Exception
