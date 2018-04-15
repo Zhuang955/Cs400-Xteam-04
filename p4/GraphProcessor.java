@@ -126,8 +126,14 @@ public class GraphProcessor {
     	String currentWord = word2;
     	//the index where currentWord is found
     	int indexFound = bfsPath.get(relatedPath).indexOf(word2);
+    	//if the word is not found in the bsf search result or if the two input words
+    	//are same, output empty path
+    	if(indexFound == -1 || word1.equals(word2)){
+    		return path;
+    	}
+    	//read through the output of bfs search to find the shortest path
     	while(!currentWord.equals(word1)){
-    		path.add(0, currentWord);
+    		path.add(0, " " + currentWord);
     		for(String successor : graph.getNeighbors(currentWord)){
     			if(bfsPath.get(relatedPath).indexOf(successor) < indexFound){
     				indexFound = bfsPath.get(relatedPath).indexOf(successor);
@@ -135,9 +141,10 @@ public class GraphProcessor {
     		}
     		currentWord = bfsPath.get(relatedPath).get(indexFound);
     	}
+    	//add the starting word into the path
+    	path.add(0, word1);
     	
     	return path;
-    
     }
     
     /**
