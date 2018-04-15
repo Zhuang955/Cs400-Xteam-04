@@ -69,8 +69,14 @@ public class Graph<E> implements GraphADT<E> {
     @Override
     public E removeVertex(E vertex) {
         if(vertex != null & graph.containsKey(vertex)) {
+            if(!graph.get(vertex).isEmpty()){
+                for(E adjacent: graph.get(vertex)){
+                    graph.get(adjacent).remove(vertex);
+                }
+            }
             visitRecord.remove(vertex);
             graph.remove(vertex);
+
             return vertex;
         } else {
             return null;
@@ -123,7 +129,7 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean removeEdge(E vertex1, E vertex2) {
-        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+        if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
             return false;
         }
         else if(vertex1.equals(vertex2)==true){//potential bug existed
