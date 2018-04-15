@@ -1,27 +1,29 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
-import java.util.*; 
+
 
 
 /**
  * Undirected and unweighted graph implementation
- * 
+ *
  * @param <E> type of a vertex
- * 
+ *
  * @author sapan (sapan@cs.wisc.edu)
- * 
+ *
  */
 public class Graph<E> implements GraphADT<E> {
+
     /**
      * Instance variables and constructors
      */
     private HashMap<E,Boolean> visitRecord;
     private HashMap<E, HashSet<E>> graph;
+
     /**
      * {@inheritDoc}
      */
-
 
     public Graph() {
         this.visitRecord = new HashMap<E, Boolean>();
@@ -83,7 +85,7 @@ public class Graph<E> implements GraphADT<E> {
         }
     }
 
-       /**
+    /**
      /**
      * Add an edge between two vertices (edge is undirected and unweighted)
      *
@@ -100,7 +102,7 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean addEdge(E vertex1, E vertex2) {
-        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+        if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
             return false;
         }
         else if(vertex1.equals(vertex2)==true){//potential bug existed
@@ -143,7 +145,7 @@ public class Graph<E> implements GraphADT<E> {
 
     }
 
-       /**
+    /**
      * Check whether the two vertices are adjacent
      *
      * Valid argument conditions:
@@ -159,7 +161,7 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean isAdjacent(E vertex1, E vertex2) {
-        if (graph.containsKey(vertex1) && graph.containsKey(vertex2)){
+        if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
             return false;
         }
         else if(vertex1.equals(vertex2)==true){//potential bug existed
@@ -187,7 +189,8 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public Iterable<E> getNeighbors(E vertex) {
-        return graph.get(vertex);
+        Set set = graph.get(vertex);
+        return set;
     }
 
     /**
@@ -200,7 +203,7 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public Iterable<E> getAllVertices() {
-        Set set = graph.entrySet();
+        Set set = graph.keySet();
         return set;
     }
 
