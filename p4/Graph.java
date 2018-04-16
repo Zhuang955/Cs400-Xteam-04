@@ -31,7 +31,7 @@ public class Graph<E> implements GraphADT<E> {
     private HashMap<E, HashSet<E>> graph;
 
     /**
-     * {@inheritDoc}
+     * Initialize two HashMaps, one is for visit record and the other is for acutal graph
      */
 
     public Graph() {
@@ -74,9 +74,7 @@ public class Graph<E> implements GraphADT<E> {
      * @param vertex the vertex to be removed
      * @return vertex if vertex removed, else return null if vertex and associated edges can not be removed (also if valid conditions are violated)
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public E removeVertex(E vertex) {
         if(vertex != null & graph.containsKey(vertex)) {
@@ -106,9 +104,7 @@ public class Graph<E> implements GraphADT<E> {
      * @param vertex2 the second vertex
      * @return true if edge added, else return false if edge can not be added (also if valid conditions are violated)
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public boolean addEdge(E vertex1, E vertex2) {
         if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
@@ -135,9 +131,7 @@ public class Graph<E> implements GraphADT<E> {
      * @param vertex2 the second vertex
      * @return true if edge removed, else return false if edge can not be removed (also if valid conditions are violated)
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public boolean removeEdge(E vertex1, E vertex2) {
         if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
@@ -165,9 +159,7 @@ public class Graph<E> implements GraphADT<E> {
      * @param vertex2 the second vertex
      * @return true if both the vertices have an edge with each other, else return false if vertex1 and vertex2 are not connected (also if valid conditions are violated)
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public boolean isAdjacent(E vertex1, E vertex2) {
         if (!graph.containsKey(vertex1) || !graph.containsKey(vertex2)){
@@ -193,9 +185,7 @@ public class Graph<E> implements GraphADT<E> {
      * @param vertex the vertex
      * @return an iterable for all the immediate connected neighbor vertices
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public Iterable<E> getNeighbors(E vertex) {
         Set set = graph.get(vertex);
@@ -207,9 +197,7 @@ public class Graph<E> implements GraphADT<E> {
      *
      * @return an iterable for all the vertices
      */
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public Iterable<E> getAllVertices() {
         Set set = graph.keySet();
