@@ -1,3 +1,12 @@
+/*
+p4 Dictionary Graph
+Kylie Huang, Lan Hu, Henry Huang, Gloria Hsieh
+Email addresses: zhuang95@wisc.edu, lhu49@wisc.edu, hhuang266@wisc.edu, ghsieh@wisc.edu 
+Due date: February 5, 2018
+Source Credits: Deb Deppeler 
+Known bugs: None
+*/
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
