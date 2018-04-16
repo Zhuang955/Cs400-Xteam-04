@@ -9,7 +9,6 @@ Known bugs: None
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -27,7 +26,6 @@ public class Graph<E> implements GraphADT<E> {
     /**
      * Instance variables and constructors
      */
-    private HashMap<E,Boolean> visitRecord;
     private HashMap<E, HashSet<E>> graph;
 
     /**
@@ -35,7 +33,6 @@ public class Graph<E> implements GraphADT<E> {
      */
 
     public Graph() {
-        this.visitRecord = new HashMap<E, Boolean>();
         this.graph = new HashMap<E, HashSet<E>>();
     }
 
@@ -59,7 +56,6 @@ public class Graph<E> implements GraphADT<E> {
         if(graph.containsKey(vertex)) {
             return null;
         }
-        visitRecord.put(vertex,false);
         graph.put(vertex, new HashSet<E>());
         return vertex;
     }
@@ -83,7 +79,6 @@ public class Graph<E> implements GraphADT<E> {
                     graph.get(adjacent).remove(vertex);
                 }
             }
-            visitRecord.remove(vertex);
             graph.remove(vertex);
 
             return vertex;
