@@ -142,7 +142,7 @@ public class GraphProcessor {
     	}
     	//read through the output of bfs search to find the shortest path
     	while(!currentWord.equals(word1)){
-    		path.add(0, " " + currentWord);
+    		path.add(0, currentWord);
     		for(String successor : graph.getNeighbors(currentWord)){
     			if(bfsPath.get(relatedPath).indexOf(successor) < indexFound){
     				indexFound = bfsPath.get(relatedPath).indexOf(successor);
@@ -189,7 +189,10 @@ public class GraphProcessor {
     		BFS(vertex);
     	}
     }
-    
+    /**
+     * run breadth first search starting from the given parameter
+     * @param name
+     */
     private void BFS(String name){
     	//stores the result of bfs
     	ArrayList<String> pathFromName = new ArrayList<String>();
