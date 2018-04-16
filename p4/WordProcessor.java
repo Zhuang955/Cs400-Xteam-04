@@ -109,7 +109,7 @@ public class WordProcessor {
 		// if the lengths of two words are equal
 		if (word1.length() == word2.length()) {
 			int difference = 0;
-			for (int n = 0; n < word1.length(); n++)) {
+			for (int n = 0; n < word1.length(); n++) {
 				if (word1.charAt(n) != word2.charAt(n)) difference++;
 			}
 			if (difference == 1) return true;
@@ -145,7 +145,8 @@ public class WordProcessor {
 			// if count is zero, then either i or j doesn't reach the end of their string
 			else if (count == 0) {
 				if ( i == m && j == n) return false;
-				else ((i == m && j == n-1) || (i == m-1 && j == n)) return true;
+				else if((i == m && j == n-1) || (i == m-1 && j == n)) 
+					return true;
 			}
 			
 		}
