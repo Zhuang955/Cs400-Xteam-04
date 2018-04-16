@@ -1,3 +1,12 @@
+/*
+p4 Dictionary Graph
+Kylie Huang, Lan Hu, Henry Huang, Gloria Hsieh
+Email addresses: zhuang95@wisc.edu, lhu49@wisc.edu, hhuang266@wisc.edu, ghsieh@wisc.edu 
+Due date: February 5, 2018
+Source Credits: Deb Deppeler 
+Known bugs: None
+*/
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
