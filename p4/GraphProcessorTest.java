@@ -23,7 +23,7 @@ public class GraphProcessorTest {
 	
 	GraphProcessor gp = null;
 	String expected = null;
-        String actual = null;
+    String actual = null;
 	String filePath = "src/words.txt";
     
     /**
@@ -67,7 +67,7 @@ public class GraphProcessorTest {
     @Test
     /** tests that getShortestPath returns the shortest path when inputs are different */
     public void test02_getShortestPath_diffWords() {
-        expected = "[cat, hat, heat, wheat]";
+        expected = "[CAT, HAT, HEAT, WHEAT]";
         gp.populateGraph(filePath);
         gp.shortestPathPrecomputation();
         List<String> steps = gp.getShortestPath("cat", "wheat");
