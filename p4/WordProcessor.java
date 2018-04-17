@@ -36,6 +36,7 @@ public class WordProcessor {
 		
 		wordStream = wordStream.map(String::toString);
 		wordStream = wordStream.filter(x -> x != null && !x.equals(""));
+		wordStream = wordStream.map(String::toUpperCase);
 
 		/**
 		 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html">java.nio.file.Files</a>
@@ -54,7 +55,6 @@ public class WordProcessor {
 		 *     produces
 		 *         a Stream of lines read from the filepath
 		 * 
-
 * Once this Stream of lines is available, you can use the powerful operations available for Stream objects to combine 
 		 * multiple pre-processing operations of each line in a single statement.
 		 * 
