@@ -126,22 +126,22 @@ public class GraphProcessor {
     	//find result of bfs that is related to word1
     	int relatedPath = -1;
     	for(int i = 0; i < bfsPath.size(); i++){
-    		if(bfsPath.get(i).get(0).equals(word1)){
+    		if(bfsPath.get(i).get(0).equals(word1.toUpperCase())){
     			relatedPath = i;
     			break;
     		}
     	}
     	
-    	String currentWord = word2;
+    	String currentWord = word2.toUpperCase();
     	//the index where currentWord is found
-    	int indexFound = bfsPath.get(relatedPath).indexOf(word2);
+    	int indexFound = bfsPath.get(relatedPath).indexOf(currentWord);
     	//if the word is not found in the bsf search result or if the two input words
     	//are same, output empty path
-    	if(indexFound == -1 || word1.equals(word2)){
+    	if(indexFound == -1 || word1.toUpperCase().equals(word2.toUpperCase())){
     		return path;
     	}
     	//read through the output of bfs search to find the shortest path
-    	while(!currentWord.equals(word1)){
+    	while(!currentWord.equals(word1.toUpperCase())){
     		path.add(0, currentWord);
     		for(String successor : graph.getNeighbors(currentWord)){
     			if(bfsPath.get(relatedPath).indexOf(successor) < indexFound){
@@ -151,8 +151,10 @@ public class GraphProcessor {
     		currentWord = bfsPath.get(relatedPath).get(indexFound);
     	}
     	//add the starting word into the path
-    	path.add(0, word1);
-    	
+    	path.add(0, word1.toUpperCase());
+    	for(int i = 0; i < path.size(); i++){
+    		System.out.println(path.get(i));
+    	}
     	return path;
     }
     
